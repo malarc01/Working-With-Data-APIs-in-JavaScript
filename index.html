@@ -18,17 +18,17 @@
     chartIt()
     // getData();
     async function chartIt() {
-      await getData();
+      const data = await getData();
 
       const ctx = document.getElementById('chart').getContext('2d');
 
       const myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: xlabels,
+          labels: data.xs,
           datasets: [{
             label: 'Global Avg Temp',
-            data: ytemps,
+            data: data.ys,
             fill: false,
             backgroundColor:
               'rgba(255, 99, 132, 0.2)',
@@ -56,12 +56,13 @@
       table.forEach(row => {
         const columns = row.split(',');
         const year = columns[0];
-        xlabels.push(year);
+        xs.push(year);
         const temp = columns[1];
-        ytemps.push(parseFloat(temp) + 14);
+        ys.push(parseFloat(temp) + 14);
 
         console.log(year, temp);
-      })
+      });
+      return { xs, ys };
       // console.log(rows);
     }
 
